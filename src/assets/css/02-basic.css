@@ -1,0 +1,252 @@
+@font-face {
+    font-family: 'Jost';
+    src: url('/assets/fonts/jost.var.subset.woff2') format('woff2');
+    font-display: swap;
+    font-weight: 100 700;
+}
+
+@font-face {
+    font-family: "Jost-fallback";
+    font-display: swap;
+    size-adjust: 95.32%;
+    ascent-override: 130%;
+    src: local("Arial");
+}
+
+@font-face {
+    font-family: 'Oswald';
+    src: url('/assets/fonts/oswald.var.subset.woff2') format('woff2');
+    font-display: swap;
+    font-weight: 100 700;
+}
+
+@font-face {
+    font-family: 'Oswald-fallback';
+    font-display: swap;
+    src: local("Arial Narrow");
+    size-adjust: 97%;
+    ascent-override: 110%;
+    descent-override: 26%;
+    line-gap-override: 14%;
+}
+
+@font-face {
+    font-family: 'Inter';
+    src: url('/assets/fonts/inter.var.subset.woff2') format('woff2');
+    font-display: swap;
+    font-weight: 100 700;
+}
+
+@font-face {
+    font-family: "Inter-fallback";
+    font-display: swap;
+    size-adjust: 106.00%;
+    ascent-override: 90%;
+    advance-override: 1;
+    src: local("Arial");
+}
+
+/* Light Only */
+:root {
+    /* Color scheme */
+    --text-hue: 14;
+    --text-color: hsl(var(--text-hue) 6% 84% / 1);
+    --text-color2: hsl(var(--text-hue) 10% 45% / 1);
+
+    --back-color: hsl(31 5% 7% / 1);
+
+
+    /* Fonts */
+
+    --font-main: 'Inter', 'Inter-fallback', 'Arial', sans-serif;
+    --font-second: 'Oswald', 'Oswald-fallback', 'Arial Narrow', sans-serif;
+    --font-weight: 400;
+    --font-weight-light: 300;
+    --font-weight-semibold: 475;
+    --font-weight-bold: 550;
+    --font-weight-extra-light: 200;
+
+    --letter-spacing-small: 0.05ch;
+    --letter-spacing-big: 0.1ch;
+    /* Misc */
+    --duration: .35s;
+    --easing: ease-in-out;
+}
+
+:root {
+    /* color: var(--text-color); */
+    fill: var(--text-color);
+    stroke: var(--text-color);
+    --column-width: 65ch;
+    --gap: var(--space-xs-s);
+    --lh: 1.6;
+    --lhh: 1.2;
+    --border-radius: 2px;
+
+    /* Type Scale */
+    /* @link https://utopia.fyi/type/calculator?c=1280,16,1.333,2540,22,1.333,4,1,&s=0.75|0.5|0.25,1.5|2|3|4|6,s-l|m-xl|xl-2xl|xs-l&g=s,l,xl,12 */
+    --step--1: clamp(0.75rem, calc(0.46rem + 0.36vw), 1.03rem);
+    --step-0: clamp(1.00rem, calc(0.62rem + 0.48vw), 1.38rem);
+    --step-1: clamp(1.33rem, calc(0.83rem + 0.63vw), 1.83rem);
+    --step-2: clamp(1.78rem, calc(1.10rem + 0.85vw), 2.44rem);
+    --step-3: clamp(2.37rem, calc(1.47rem + 1.13vw), 3.26rem);
+    --step-4: clamp(3.16rem, calc(1.95rem + 1.50vw), 4.34rem);
+
+    /* @link https://utopia.fyi/space/calculator?c=1280,16,1.333,2540,22,1.333,4,1,&s=0.75|0.5|0.25,1.5|2|3|4|6,s-xl|m-xl|l-2xl|xs-l|xs-2xl&g=s,l,xl,12 */
+    --space-3xs: clamp(0.25rem, calc(0.12rem + 0.16vw), 0.38rem);
+    --space-2xs: clamp(0.50rem, calc(0.31rem + 0.24vw), 0.69rem);
+    --space-xs: clamp(0.75rem, calc(0.43rem + 0.40vw), 1.06rem);
+    --space-s: clamp(1.00rem, calc(0.62rem + 0.48vw), 1.38rem);
+    --space-m: clamp(1.50rem, calc(0.93rem + 0.71vw), 2.06rem);
+    --space-l: clamp(2.00rem, calc(1.24rem + 0.95vw), 2.75rem);
+    --space-xl: clamp(3.00rem, calc(1.86rem + 1.43vw), 4.13rem);
+    --space-2xl: clamp(4.00rem, calc(2.48rem + 1.90vw), 5.50rem);
+    --space-3xl: clamp(6.00rem, calc(3.71rem + 2.86vw), 8.25rem);
+
+    /* One-up pairs */
+    --space-3xs-2xs: clamp(0.25rem, calc(-0.19rem + 0.56vw), 0.69rem);
+    --space-2xs-xs: clamp(0.50rem, calc(-0.07rem + 0.71vw), 1.06rem);
+    --space-xs-s: clamp(0.75rem, calc(0.12rem + 0.79vw), 1.38rem);
+    --space-s-m: clamp(1.00rem, calc(-0.08rem + 1.35vw), 2.06rem);
+    --space-m-l: clamp(1.50rem, calc(0.23rem + 1.59vw), 2.75rem);
+    --space-l-xl: clamp(2.00rem, calc(-0.16rem + 2.70vw), 4.13rem);
+    --space-xl-2xl: clamp(3.00rem, calc(0.46rem + 3.17vw), 5.50rem);
+    --space-2xl-3xl: clamp(4.00rem, calc(-0.32rem + 5.40vw), 8.25rem);
+
+    /* Custom pairs */
+    --space-s-xl: clamp(1.00rem, calc(-2.17rem + 3.97vw), 4.13rem);
+    --space-m-xl: clamp(1.50rem, calc(-1.17rem + 3.33vw), 4.13rem);
+    --space-l-2xl: clamp(2.00rem, calc(-1.56rem + 4.44vw), 5.50rem);
+    --space-xs-l: clamp(0.75rem, calc(-1.28rem + 2.54vw), 2.75rem);
+    --space-xs-2xl: clamp(0.75rem, calc(-4.08rem + 6.03vw), 5.50rem);
+}
+
+::selection {
+    color: var(--back-color);
+    background: var(--text-color);
+}
+
+html {
+    scroll-behavior: smooth;
+    scrollbar-width: thin;
+    scrollbar-gutter: stable;
+    scrollbar-color: var(--text-color) var(--back-color);
+    background: var(--back-color);
+    color: var(--text-color);
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background-color: var(--back-color);
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: var(--text-color);
+}
+
+svg {
+    fill: var(--text-color);
+    stroke: var(--text-color);
+}
+
+body.is-loading *,
+body.is-loading *:before,
+body.is-loading *:after {
+    animation: none !important;
+    transition: none !important;
+}
+
+/* Type */
+
+body,
+input,
+select,
+textarea {
+    line-height: var(--lh);
+    font-family: var(--font-main);
+    font-size: var(--step-0);
+    font-weight: var(--font-weight);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    /* font-family: var(--font-second); */
+    line-height: var(--lhh);
+    font-weight: var(--font-weight-light);
+    font-weight: var(--font-weight-semibold);
+    /* letter-spacing: 0.19ch; */
+    letter-spacing: var(--letter-spacing-big);
+}
+
+h1 {
+    font-size: var(--step-4);
+}
+
+h2 {
+    font-size: var(--step-3);
+}
+
+h3 {
+    font-size: var(--step-2);
+}
+
+h4 {
+    font-size: var(--step-1);
+}
+
+/* p {
+    line-height: 1.6;
+  } */
+
+sup {
+    font-size: .7em;
+}
+
+hr {
+    border: 0;
+    margin: var(--gap) 0;
+}
+
+a:not([class]) {
+    transition: text-decoration-color var(--duration) var(--easing);
+    /* text-decoration: underline 0.075em var(--text-color2);
+    text-underline-offset: 0.15em; */
+    text-decoration: underline;
+    text-decoration-thickness: 0.075em;
+    text-decoration-color: var(--text-color2);
+    text-underline-offset: 0.2em;
+}
+
+a:not([class]):hover {
+    text-decoration-color: transparent;
+}
+
+:where(:not(:active)):focus-visible {
+    outline: dashed 2px var(--text-color2);
+    outline-offset: 5px;
+}
+
+img {
+    border-radius: var(--border-radius);
+}
+
+.stack>*+* {
+    margin-top: calc(var(--lh) * 1em);
+}
+
+.stack>*+:where(h1, h2, h3, h4) {
+    margin-top: calc(var(--lhh) * 1em);
+}
+
+.flex-stack {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-m);
+}

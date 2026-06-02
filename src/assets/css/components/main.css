@@ -1,0 +1,42 @@
+main {
+  --content: min(var(--column-width), calc(100% - var(--gap)*2));
+  --full: minmax(0, 1fr);
+  --main-gap: var(--gap);
+  --feature: minmax(0, 12ch);
+  --popout: minmax(0, var(--space-s-m));
+  display: grid;
+  grid-template-columns: [full-start] var(--main-gap) [max-start] var(--full) [feature-start] var(--feature) [popout-start] var(--popout) [content-start] var(--content) [content-end] var(--popout) [popout-end] var(--feature) [feature-end] var(--full) [max-end] var(--main-gap) [full-end];
+  grid-auto-rows: min-content;
+}
+
+main>* {
+  grid-column: content;
+}
+
+main.stack>:first-child {
+  margin-top: 0;
+}
+
+main>.feature {
+  grid-column: feature;
+}
+
+main>.popout {
+  grid-column: popout;
+}
+
+main>.max {
+  grid-column: max;
+}
+
+main>.full {
+  grid-column: full;
+}
+
+@media screen and (max-width: 75ch) {
+
+  main picture,
+  main.index>a {
+    grid-column: full;
+  }
+}

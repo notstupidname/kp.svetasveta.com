@@ -1,0 +1,22 @@
+<aside id="cta" class="stack">
+    <h2>{{title}}</h2>
+    <p>{{subtitle}}</p>
+    <form id="form-cta" class="flex-stack">
+      <input type="text" name="name" placeholder="Ваше имя*" required>
+      <input type="email" name="email" placeholder="E-mail*" required>
+      <input style="display:none" type="text" name="page" value={{ page.url }}>
+      <button type="submit">Отправить</button>
+    </form>
+    <div class="form-loading stack fhide">
+      <h3>Отправка..</h3>
+      <p>Очень стараемся побыстрее отправить ваше сообщение.</p>
+    </div>
+    <div class="form-success stack fhide">
+      <h3>Спасибо!</h3>
+      <p>Мы получили ваше сообщение и свяжемся с вами в самое ближайшее время!</p>
+    </div>
+    <div class="form-error stack fhide">
+      <h3>Ой!</h3>
+      <p>Что-то пошло не так. Попробуйте отправить сообщение чуть позже.</p>
+    </div>
+</aside>

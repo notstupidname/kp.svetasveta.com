@@ -1,0 +1,21 @@
+<nav>
+  <div>
+  {% assign navPages = collections.menu | eleventyNavigation: 'index' %}
+    <p>Концепт</p>
+    <ul>
+      {% for room in concept %}
+      <li><a href="#concept-{{forloop.index}}">{{room.name}}</a></li>
+      {% endfor %}
+    </ul>
+  </div>
+  <div>
+    <p>Проект</p>
+    <ul>
+      <li><a href="#project-materials">Материалы</a></li>
+      <li><a href="#project-mebel">Мебель</a></li>
+      <li><a href="#project-santech">Сантехника</a></li>
+      <li><a href="#project-oborud">Оборудование</a></li>
+      <li><a href="#project-svet">Освещение</a></li>
+    </ul>
+  </div>
+</nav>

@@ -1,0 +1,24 @@
+{% unless title %}
+  {% assign title = config.defaultTitle %}
+{% endunless %}
+
+
+{%- assign description = description | default: config.defaultDescription  -%}
+{%- assign image = image | default: config.defaultImage -%}
+
+
+<!doctype html>
+<html lang="{{ config.lang }}">
+  <head>
+      {{url}}
+      {% include 'partials/head-pwa.liquid' %}
+  </head>
+  <body class="is-loading">
+    {% include 'partials/header.liquid' %}
+    {% include 'partials/nav-pwa.liquid' %}
+    <main class="stack">
+      {{content}}
+    </main>
+    {% include 'partials/footer.liquid' %}
+  </body>
+</html>

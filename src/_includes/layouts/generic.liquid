@@ -1,0 +1,24 @@
+---
+layout: "layouts/base.liquid"
+
+eleventyComputed:
+  navToHtmlOptions: 
+    activeListItemClass: "current"
+    listItemHasChildrenClass: "list"
+    activeKey: "{{eleventyNavigation.key}}"
+---
+{% include 'partials/header.liquid' %}
+{% include 'partials/nav.liquid' %}
+<main class="stack">
+  {%- unless nobc -%}
+  {% include 'partials/breadcrumbs.liquid' %}
+  {%- endunless -%}
+  {%- if page-h1 -%}
+  <h1>{{page-h1}}</h1>
+  {%- endif -%}
+  {{content}}
+</main>
+{% if cta %}
+{% include 'partials/cta.liquid' title: cta.title, subtitle: cta.subtitle %}
+{% endif %}
+{% include 'partials/footer.liquid' %}

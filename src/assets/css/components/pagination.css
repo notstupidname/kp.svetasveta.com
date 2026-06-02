@@ -1,0 +1,40 @@
+#pagination ol {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .5em 1ch;
+  justify-content: center;
+  font-size: var(--step-1);
+  color: var(--text-color2);
+  font-family: var(--font-second);
+  font-weight: var(--font-weight-light);
+  letter-spacing: 0.19ch;
+}
+
+#pagination ol li a {
+  color: var(--text-color);
+  padding-block: 0.5em;
+}
+
+#pagination ol li a.page-number {
+  padding-inline: 1.5ch;
+}
+
+#pagination ol li a {
+  transition: text-decoration-color var(--duration) var(--easing);
+  text-decoration: underline 0.075em var(--back-color);
+  text-underline-offset: 0.15em;
+}
+
+#pagination ol li a[aria-current] {
+  color: var(--text-color2);
+  pointer-events: none;
+  text-decoration-color: var(--text-color2);
+}
+
+#pagination ol li a:hover {
+  text-decoration-color: var(--text-color2);
+}
+
+#pagination ol li:first-child {
+  padding-inline-start: 1.2ch;
+}

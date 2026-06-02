@@ -1,0 +1,49 @@
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>{{ title }}</title>
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<link
+    rel="preload"
+    href="/assets/fonts/inter.var.subset.woff2"
+    as="font"
+    type="font/woff2"
+    crossorigin>
+<link rel="manifest" href="/manifest.webmanifest">
+<link
+    rel="icon"
+    href="/icon.svg"
+    type="image/svg+xml">
+<link
+    rel="icon"
+    href="/favicon.ico"
+    sizes="any">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+{% if config.gtag != '' and features.devMode == false %}
+    {% include 'partials/gtag.liquid' %}
+{% endif %}
+{% include 'partials/scripts.liquid' %}
+<meta name="color-scheme" content="dark">
+<link rel="stylesheet" href="/assets/css/main.min.css" />
+<meta name="application-name" content="{{ config.name }}" />
+<meta name="theme-color" content="hsl(31 5% 7% / 1)" />
+{% include 'partials/seo.liquid' %}
+{%- if features.enableDesignMode -%}
+    <script>
+        (function() {
+            const DESIGN_MODE_STORAGE_KEY = 'design-mode';
+            const cachedDesignMode = localStorage.getItem(DESIGN_MODE_STORAGE_KEY);
+            document.designMode = cachedDesignMode;
+
+            document.addEventListener('keyup', (e) => {
+                if (e.ctrlKey && e.key === '.') {
+                    const newDesignMode = document.designMode === 'on'
+                        ? 'off'
+                        : 'on';
+                    document.designMode = newDesignMode;
+                    localStorage.setItem(DESIGN_MODE_STORAGE_KEY, newDesignMode);
+                }
+            });
+        })();
+    </script>
+{%- endif -%}
+<meta name="robots" content="noindex" />

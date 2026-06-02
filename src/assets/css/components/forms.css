@@ -1,0 +1,54 @@
+/* Forms */
+
+/* .form-wrapper {
+    min-width: clamp(300px, 100%, 50ch);
+} */
+
+input[type=email],
+input[type=password],
+input[type=tel],
+input[type=text],
+select,
+textarea {
+  appearance: none;
+  background: var(--back-color);
+  border: none;
+  border-bottom: solid 1px var(--text-color2);
+  display: block;
+  outline: 0;
+  padding: 0.75em 1.75ch;
+  text-decoration: none;
+  font-size: var(--step-0);
+  /* box-shadow: inset 0 0 2px 0 var(--text-color2); */
+  transition: border var(--duration) var(--easing);
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="email"]:focus,
+input[type="tel"]:focus,
+select:focus,
+textarea:focus {
+  /* box-shadow: inset 0 0 1px 1px var(--text-color2); */
+  border-bottom: solid 1px var(--text-color);
+}
+
+::-webkit-input-placeholder {
+  color: var(--text-color2);
+}
+
+:-moz-placeholder {
+  color: var(--text-color2);
+}
+
+::-moz-placeholder {
+  color: var(--text-color2);
+}
+
+:-ms-input-placeholder {
+  color: var(--text-color2);
+}
+
+input:not(:placeholder-shown):focus-within:invalid {
+  border-bottom-color: hsl(10 42% 42% / 1);
+}

@@ -1,0 +1,18 @@
+{% unless title %}
+    {% assign title = config.defaultTitle %}
+{% endunless %}
+
+
+{%- assign description = description | default: config.defaultDescription  -%}
+{%- assign image = image | default: config.defaultImage -%}
+
+
+<!doctype html>
+<html lang="{{ config.lang }}">
+    <head>
+        {% include 'partials/head.liquid' %}
+    </head>
+    <body class="is-loading">
+        {{ content }}
+    </body>
+</html>

@@ -1,0 +1,39 @@
+#navbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3xs) 1ch;
+  color: var(--text-color2);
+  font-size: var(--step-1);
+  font-family: var(--font-second);
+  font-weight: var(--font-weight-light);
+  letter-spacing: 0.19ch;
+  margin-top: var(--space-m);
+
+  align-items: center;
+}
+
+#navbar li::after {
+  content: "/";
+  padding-inline-start: 1ch;
+  color: var(--text-color2);
+}
+
+#navbar li:last-child::after {
+  content: "";
+  display: none;
+}
+
+#navbar li.current a {
+  color: var(--text-color);
+  text-decoration-color: var(--text-color2);
+}
+
+#navbar a {
+  text-decoration-color: var(--back-color);
+  transition: text-decoration-color var(--duration) var(--easing), color var(--duration) var(--easing);
+}
+
+#navbar a:hover {
+  text-decoration-color: var(--text-color2);
+  color: var(--text-color);
+}

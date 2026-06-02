@@ -1,0 +1,22 @@
+<nav>
+  <div>
+    <p>Концепт</p>
+    <ul>
+      {% for room in concept %}
+      <li><a href="#concept-{{forloop.index}}">{{room.name}}</a></li>
+      {% endfor %}
+    </ul>
+  </div>
+  {% if makeProject == true %}
+  <div>
+    <p>Проект</p>
+    <ul>
+      {% for subcat in project %}
+      {% if subcat[1].items.length > 0 %}
+      <li><a href="#project-{{subcat[0]}}">{{ subcat[1].title }}</a></li>
+      {% endif %}
+      {% endfor %}
+    </ul>
+  </div>
+  {% endif %}
+</nav>

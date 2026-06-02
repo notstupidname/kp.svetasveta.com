@@ -1,0 +1,28 @@
+.items {
+  --min-size: 30ch;
+  display: grid;
+  /* grid-template-columns: repeat(auto-fit, minmax(var(--min-size), 1fr)); */
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-l) var(--space-s);
+  margin-block: var(--space-m);
+}
+
+@media screen and (max-width: 600px) {
+  .items:not(.small) {
+    grid-template-columns: 1fr;
+  }
+}
+
+figcaption {
+  font-style: italic;
+  text-align: center;
+  margin-block-start: 1em;
+}
+
+.items>a>picture {
+  transition: filter var(--duration) var(--easing);
+}
+
+.items>a:hover>picture {
+  filter: brightness(1.1) saturate(1.1);
+}

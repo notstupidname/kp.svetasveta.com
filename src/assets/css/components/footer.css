@@ -1,0 +1,37 @@
+#site-footer {
+  text-align: right;
+  margin-bottom: var(--gap);
+  margin-top: var(--space-xl-2xl);
+  padding-inline: 4rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: var(--space-s);
+}
+
+@media screen and (max-width: 1280px) {
+  #site-footer {
+    padding-inline: var(--gap);
+    max-width: calc(var(--column-width) + var(--gap)*2);
+    margin-inline: auto;
+    width: 100%;
+  }
+}
+
+a.top {
+  display: block;
+  width: 100%;
+  max-width: 10ch;
+}
+
+a.top svg {
+  stroke-width: 50px;
+  width: var(--space-l);
+  height: var(--space-l);
+  transition: all .3s ease-in-out;
+  stroke-linecap: round;
+}
+
+a.top:hover svg {
+  stroke-width: 70px;
+}

@@ -1,0 +1,4 @@
+::view-transition-group(root) {
+  animation-duration: var(--duration);
+  animation-timing-function: var(--easing);
+}

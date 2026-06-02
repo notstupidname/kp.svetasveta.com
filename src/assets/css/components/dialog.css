@@ -1,0 +1,163 @@
+#dialog {
+  --max-width: calc(100vw - 2*var(--gap));
+  display: grid;
+  max-inline-size: min(var(--column-width), var(--max-width));
+  inline-size: min(var(--column-width), var(--max-width));
+  border: none;
+  box-shadow: inset 0 0 1px 0 var(--text-color);
+  background: var(--back-color);
+  padding: var(--gap);
+  max-block-size: 80vh;
+  max-block-size: 80dvh;
+  min-block-size: 40vh;
+  min-block-size: 40dvh;
+  overflow: hidden;
+  inset: 0;
+  margin: auto;
+  position: fixed;
+
+  transition: opacity var(--duration) cubic-bezier(1, 0.16, 0.9, 0.83);
+
+  --animation-scale-down: scale-down var(--duration) var(--easing);
+  --animation-slide-in-up: slide-in-up var(--duration) var(--easing);
+  --animation-slide-out-down: slide-out-down var(--duration) var(--easing);
+  animation: var(--animation-scale-down) forwards;
+
+  /* iOS fix? */
+  height: 50vh;
+  height: 50dvh;
+}
+
+@keyframes scale-down {
+  to {
+    transform: scale(.75)
+  }
+}
+
+@keyframes slide-in-up {
+  from {
+    transform: translateY(100%)
+  }
+}
+
+@keyframes slide-out-down {
+  to {
+    transform: translateY(100%)
+  }
+}
+
+@keyframes blinking {
+  0% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: .5;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  #dialog {
+    margin-block-end: 0;
+    border-block-end: none;
+    min-block-size: 60vh;
+    min-block-size: 60dvh;
+
+    animation: var(--animation-slide-out-down) forwards;
+  }
+}
+
+#dialog[open] {
+  animation: var(--animation-slide-in-up) forwards;
+}
+
+/* html:has(dialog[open]) {
+  overflow: hidden;
+} */
+
+#dialog:not([open]) {
+  pointer-events: none;
+  opacity: 0;
+}
+
+#dialog::backdrop {
+  /* background-color: rgba(0 0 0 / .5); */
+  background: transparent;
+  backdrop-filter: blur(0.75px) brightness(0.95);
+  transition: background-color var(--duration) var(--easing);
+}
+
+#dialog>form {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  align-items: start;
+  max-block-size: 80vh;
+  max-block-size: 80dvb;
+}
+
+#dialog>form>header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#dialog>form>footer {
+  text-align: center;
+  margin-block-end: var(--space-m);
+}
+
+#dialog>form>header,
+#dialog>form>footer {
+  filter: brightness(.85);
+}
+
+#dialog>form>header>button {
+  /* display: grid; */
+  justify-content: end;
+  padding: 0;
+  width: var(--space-xl);
+  height: var(--space-xl);
+  box-shadow: none;
+  color: var(--text-color);
+
+  transition: color var(--duration) var(--easing),
+    transform var(--duration) var(--easing);
+}
+
+#dialog>form>header>button:hover {
+  color: var(--text-color2);
+  background-color: transparent;
+}
+
+#dialog>form>header>button:focus-visible {
+  outline: none;
+}
+
+#dialog>form>header>button:hover svg {
+  transform: scale(0.95);
+}
+
+#dialog>form>header>button:active {
+  transform: scale(0.85);
+}
+
+#dialog>form>header>button svg {
+  height: 50%;
+  stroke-width: .7rem;
+  stroke: currentColor;
+  transition: transform var(--duration) var(--easing);
+}
+
+#dialog>form>article {
+  overflow-y: auto;
+  max-block-size: 100%;
+  /* safari */
+  overscroll-behavior-y: contain;
+  padding-block-end: var(--space-l);
+  text-align: center;
+  align-self: center;
+}
+
+#dialog>form>article p.searching {
+  animation: blinking 1s var(--easing) infinite;
+}

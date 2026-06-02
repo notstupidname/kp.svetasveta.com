@@ -1,0 +1,15 @@
+#cta {
+  margin-top: var(--space-2xl-3xl);
+  width: clamp(280px, calc(100% - 2 * var(--gap)), 50ch);
+  margin-inline: auto;
+  text-align: center;
+}
+
+#cta form {
+  margin-top: var(--space-l-xl);
+}
+
+#cta form button {
+  align-self: center;
+  margin-top: var(--space-s);
+}
