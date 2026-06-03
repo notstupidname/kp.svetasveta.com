@@ -56,8 +56,20 @@
   /* inline-size: fit-content; */
   scroll-snap-stop: always;
   block-size: 100%;
+  display: flex;
+  gap: 1ch;
+  aspect-ratio: 16/9;
+  justify-content: space-evenly;
 
   animation-timeline: view(inline);
+}
+
+.cslide.ar43 {
+  aspect-ratio: 4/3;
+}
+
+.cslide.ar32 {
+  aspect-ratio: 3/2;
 }
 
 /* .slide:last-of-type {
@@ -73,7 +85,7 @@
 }
 
 .cslide img {
-  block-size: auto;
+  block-size: 100%;
   inline-size: auto;
   margin-inline: auto;
   max-block-size: 75vh;

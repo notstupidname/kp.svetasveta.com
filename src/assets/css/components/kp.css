@@ -52,4 +52,17 @@ body.kp {
       object-fit: contain;
     }
   }
+
+  & .project-meta {
+    font-size: var(--step--1);
+    display: flex;
+    justify-content: space-between;
+    margin-block-end: var(--space-xs);
+  }
+
+  & nav ul {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2xs);
+  }
 }

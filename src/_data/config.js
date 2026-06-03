@@ -17,7 +17,7 @@ const config = {
   name: 'СВЕТАСВЕТА',
   lang: 'ru',
   locale: 'ru_RU',
-  gtag: 'GTM-5P237L34', // Put Google Tag Manager tag here,like GTM-NQLKKG4
+  gtag: 'GTM-KWWK3JZG', // Put Google Tag Manager tag here,like GTM-NQLKKG4
   baseUrl,
   logo: '/icon-512.png',
   social: ["https://www.facebook.com/", "https://instagram.com/"],
