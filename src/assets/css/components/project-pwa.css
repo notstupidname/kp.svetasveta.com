@@ -79,7 +79,7 @@
 }
 
 .project-pwa main>section {
-  scroll-margin-block-start: calc(var(--step-2)*var(--lh) + var(--space-s)*2);
+  scroll-margin-block-start: calc(var(--header-height) - var(--step-2)*var(--lh));
   margin-block-end: var(--space-xl);
 }
 
@@ -147,10 +147,6 @@
   transform: rotate(180deg);
   stroke-linecap: round;
   transition: all var(--duration) var(--easing);
-}
-
-.project-pwa img {
-  filter: brightness(.9) saturate(.9) contrast(1.1);
 }
 
 .project-pwa .table {
