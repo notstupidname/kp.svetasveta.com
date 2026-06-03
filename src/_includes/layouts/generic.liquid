@@ -8,7 +8,7 @@ eleventyComputed:
     activeKey: "{{eleventyNavigation.key}}"
 ---
 {% include 'partials/header.liquid' %}
-{% include 'partials/nav.liquid' %}
+{% comment %} {% include 'partials/nav.liquid' %} {% endcomment %}
 <main class="stack">
   {%- unless nobc -%}
   {% include 'partials/breadcrumbs.liquid' %}

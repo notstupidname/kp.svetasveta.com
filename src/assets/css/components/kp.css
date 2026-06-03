@@ -65,4 +65,36 @@ body.kp {
     flex-direction: column;
     gap: var(--space-2xs);
   }
+
+  & .title-card {
+    position: relative;
+
+    & header {
+      z-index: 10;
+    }
+
+
+    & a.start {
+      z-index: 10;
+    }
+
+    & picture {
+      position: absolute;
+      block-size: 100%;
+      inline-size: 100%;
+      z-index: 1;
+
+      & img {
+        object-fit: cover;
+        block-size: 100%;
+        inline-size: 100%;
+        opacity: .3;
+        filter: blur(6px);
+      }
+    }
+
+    & h1 {
+      font-size: var(--step-3);
+    }
+  }
 }

@@ -116,11 +116,11 @@
   max-height: 90vh;
 }
 
-.project-pwa section.title-card h1 {
+/* .project-pwa section.title-card h1 {
   font-size: 20vmin;
   letter-spacing: .5ch;
   padding-inline-start: 0.5ch;
-}
+} */
 
 .project-pwa a.start {
   width: 100%;

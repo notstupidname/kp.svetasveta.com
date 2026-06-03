@@ -1,8 +1,4 @@
 ---
-layout: layouts/kp.liquid
-totop: 1
+layout: layouts/generic.liquid
 nobc: 1
-title: ProjectName
-makeProject: false
-project-name: Name
 ---
