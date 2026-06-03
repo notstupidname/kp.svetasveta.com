@@ -1,0 +1,176 @@
+.carousel {
+  display: flex;
+  position: relative;
+  transition: all var(--duration) var(--easing);
+}
+
+.slider {
+  scroll-snap-type: x mandatory;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  display: flex;
+  align-items: center;
+  height: 100%;
+
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
+  scrollbar-gutter: auto;
+  scroll-snap-stop: always;
+
+
+}
+
+.slider figure {
+  position: relative;
+
+  & figcaption {
+    position: absolute;
+    background-color: var(--color-back);
+    z-index: 10;
+    opacity: .7;
+    padding-inline: 1ch;
+    font-size: var(--step--1);
+  }
+}
+
+
+.slider::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.slider::-webkit-scrollbar-thumb {
+  border-radius: 6px;
+}
+
+.slider::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.cslide {
+  scroll-snap-align: center;
+  /* flex: 0 0 100%; */
+  /* display: grid; */
+  /* place-items: center; */
+  min-inline-size: 100%;
+  /* inline-size: fit-content; */
+  scroll-snap-stop: always;
+  block-size: 100%;
+
+  animation-timeline: view(inline);
+}
+
+/* .slide:last-of-type {
+  scroll-snap-align: end;
+} */
+
+
+/* Fix fo Safari */
+.cslide picture {
+  /* aspect-ratio: 16/9; */
+  max-height: 75vh;
+  /* margin-inline: auto; */
+}
+
+.cslide img {
+  block-size: auto;
+  inline-size: auto;
+  margin-inline: auto;
+  max-block-size: 75vh;
+  /* aspect-ratio: 16 / 9; */
+  object-fit: contain;
+
+}
+
+
+.arrow {
+  position: absolute;
+  height: 100%;
+  min-inline-size: 4em;
+  top: 0;
+  display: grid;
+  place-items: center;
+  background: none;
+  opacity: 0.1;
+  cursor: pointer;
+  inline-size: min(10em, 10vw);
+
+  transition: all .3s;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.arrow.back {
+  left: 0;
+  justify-content: start;
+}
+
+.arrow.forward {
+  right: 0;
+  justify-content: end;
+  z-index: 10;
+}
+
+.arrow:hover {
+  background: none;
+  opacity: 1;
+}
+
+.arrow svg {
+  height: 4rem;
+  stroke-width: 5px;
+}
+
+.arrow.forward svg {
+  transform: rotate(180deg);
+}
+
+@media (pointer: coarse) {
+
+  .slider {
+    overflow-x: scroll;
+  }
+
+  .arrow {
+    display: none;
+  }
+
+}
+
+.carousel-dots {
+  position: absolute;
+  /* Position at the bottom of the carousel */
+  bottom: var(--space-xs);
+  /* Adjust as needed for spacing from the bottom */
+  left: 50%;
+  transform: translateX(-50%);
+  /* Center horizontally */
+  display: flex;
+  gap: var(--space-2xs);
+  /* Spacing between dots */
+}
+
+.dot {
+  width: var(--space-xs);
+  height: var(--space-xs);
+  border-radius: 50%;
+  background-color: #bbb;
+  /* Inactive dot color */
+  border: none;
+  box-shadow: none;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+  transition: background-color var(--duration) var(--easing);
+  opacity: 0.8;
+}
+
+.dot.active {
+  background-color: #eee;
+  /* Active dot color */
+  opacity: 1;
+}
+
+.dot:hover {
+  opacity: 1;
+  background-color: #eee;
+}

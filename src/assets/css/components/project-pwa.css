@@ -131,6 +131,14 @@
   place-items: center;
   opacity: .8;
   transition: opacity var(--duration) var(--easing);
+
+  &:hover {
+    opacity: 1;
+
+    & svg {
+      stroke-width: 50px;
+    }
+  }
 }
 
 .project-pwa a.start svg {
@@ -138,6 +146,7 @@
   stroke-width: 40px;
   transform: rotate(180deg);
   stroke-linecap: round;
+  transition: all var(--duration) var(--easing);
 }
 
 .project-pwa img {

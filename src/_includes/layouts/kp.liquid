@@ -1,0 +1,34 @@
+{% unless title %}
+  {% assign title = config.defaultTitle %}
+{% endunless %}
+
+
+{%- assign description = description | default: config.defaultDescription  -%}
+{%- assign image = image | default: config.defaultImage -%}
+
+
+<!doctype html>
+<html lang="{{ config.lang }}">
+  <head>
+      {% include 'partials/head.liquid' pwaUrl: pwaUrl %}
+  </head>
+  <body class="is-loading project-pwa kp">
+    {% include 'partials/header.liquid' %}
+    {% include 'partials/nav-kp.liquid' %}
+    <main class="stack">
+      <section class="title-card max">
+        <header class="centered stack">
+          <h1>{{ project-name }}</h1>
+        </header>
+        <a class="start" href="#id1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000">
+            <title>Старт</title>
+            <path d="M500 50v900m0-900l300 300M500 50l-300 300" />
+          </svg>
+        </a>
+      </section>
+      {{ content }}
+    </main>
+    {% include 'partials/footer.liquid' %}
+  </body>
+</html>

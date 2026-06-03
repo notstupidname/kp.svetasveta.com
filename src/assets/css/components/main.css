@@ -3,7 +3,7 @@ main {
   --full: minmax(0, 1fr);
   --main-gap: var(--gap);
   --feature: minmax(0, 12ch);
-  --popout: minmax(0, var(--space-s-m));
+  --popout: minmax(0, var(--space-xl));
   display: grid;
   grid-template-columns: [full-start] var(--main-gap) [max-start] var(--full) [feature-start] var(--feature) [popout-start] var(--popout) [content-start] var(--content) [content-end] var(--popout) [popout-end] var(--feature) [feature-end] var(--full) [max-end] var(--main-gap) [full-end];
   grid-auto-rows: min-content;

@@ -8,44 +8,23 @@
     as="font"
     type="font/woff2"
     crossorigin>
-<link rel="manifest" href="/manifest.webmanifest">
-<link
-    rel="icon"
-    href="/icon.svg"
-    type="image/svg+xml">
-<link
-    rel="icon"
-    href="/favicon.ico"
-    sizes="any">
-<link rel="apple-touch-icon" href="/apple-touch-icon.png">
-{% if config.gtag != '' %}
-    {% include 'partials/gtag.liquid' %}
+<link rel="manifest" id="manifest" href="/manifest.light.webmanifest">
+<script>
+const usesDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+const manifest = document.getElementById('manifest');
+if (usesDarkMode) {manifest.href = '/manifest.dark.webmanifest'};
+</script>
+{% renderTemplate "njk" %}
+{% favicons './src/assets/icons/favicon.svg', appleIconBgColor='transparent' %}
+{% endrenderTemplate %}
+{% if config.gtag != '' and features.devMode == false %}
+  {% include 'partials/gtag.liquid' %}
 {% endif %}
 {% include 'partials/scripts.liquid' %}
-<meta name="color-scheme" content="dark">
+<meta name="color-scheme" content="light dark">
 <link rel="stylesheet" href="/assets/css/main.min.css" />
 <meta name="application-name" content="{{ config.name }}" />
-<meta name="theme-color" content="#000" />
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="{{config.metaThemeColorLight}}" />
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="{{config.metaThemeColorDark}}" />
 {% include 'partials/seo.liquid' %}
-{%- if features.enableDesignMode -%}
-    <script>
-        (function() {
-            const DESIGN_MODE_STORAGE_KEY = 'design-mode';
-            const cachedDesignMode = localStorage.getItem(DESIGN_MODE_STORAGE_KEY);
-            document.designMode = cachedDesignMode;
-
-            document.addEventListener('keyup', (e) => {
-                if (e.ctrlKey && e.key === '.') {
-                    const newDesignMode = document.designMode === 'on'
-                        ? 'off'
-                        : 'on';
-                    document.designMode = newDesignMode;
-                    localStorage.setItem(DESIGN_MODE_STORAGE_KEY, newDesignMode);
-                }
-            });
-        })();
-    </script>
-{%- endif -%}
-{%- if features.devMode -%}
-    <meta name="robots" content="noindex" />
-{%- endif -%}
+<meta name="robots" content="noindex" />

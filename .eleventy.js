@@ -1,226 +1,130 @@
-const Image = require("@11ty/eleventy-img");
-const path = require("path");
-const CleanCSS = require("clean-css");
-const fg = require('fast-glob');
-const fs = require('fs');
-const { minify } = require("terser");
-const htmlmin = require("html-minifier");
-// const faviconsPlugin = require("eleventy-plugin-gen-favicons");
-const eleventyNavigationPlugin = require("@11ty/eleventy-navigation");
-const sitemap = require("@quasibit/eleventy-plugin-sitemap");
+import { transform } from "lightningcss";
+import eleventyNavigationPlugin from "@11ty/eleventy-navigation";
+import faviconsPlugin from "eleventy-plugin-gen-favicons";
+import sitemap from "@quasibit/eleventy-plugin-sitemap";
+import { minify } from "terser";
+import htmlmin from "html-minifier-terser";
+import { EleventyRenderPlugin } from "@11ty/eleventy";
+import { eleventyImageTransformPlugin } from "@11ty/eleventy-img";
+import path from "path";
 
-const config = require('./src/_data/config');
+import localPlugin from "./_config/local-plugin.js";
+import config from "./src/_data/config.js";
 
-module.exports = function (eleventyConfig) {
+export default function (eleventyConfig) {
 
-    eleventyConfig.addPassthroughCopy("src/img");
-    eleventyConfig.addPassthroughCopy("src/assets/fonts");
-    // Copy favicons to root
-    eleventyConfig.addPassthroughCopy({ "src/icon/": "/" });
+  // Directories config
+  eleventyConfig.setInputDirectory("src");
+  eleventyConfig.setOutputDirectory("_site");
 
-    // CSS Minifier
-    eleventyConfig.addFilter("cssmin", function (code) {
-        return new CleanCSS({}).minify(code).styles;
+  eleventyConfig.addPassthroughCopy("src/assets/fonts");
+  eleventyConfig.addPassthroughCopy("src/assets/icons");
+  eleventyConfig.addPassthroughCopy("src/assets/video");
+
+  // Watch for all files in src/asssets/
+  eleventyConfig.addWatchTarget("src/assets/**/*.*");
+
+  // PLUGINS
+
+  // Local plugin
+  eleventyConfig.addPlugin(localPlugin);
+
+  // Favicons plugin
+  eleventyConfig.addPlugin(faviconsPlugin, { 'generateManifest': false });
+
+  //Render Template Plugin for Favicons plugin parameters
+  eleventyConfig.addPlugin(EleventyRenderPlugin);
+
+  // Sitemap plugin
+  eleventyConfig.addPlugin(sitemap, {
+    sitemap: {
+      hostname: config.baseUrl,
+      changefreq: "weekly",
+      priority: 1.0,
+    },
+  });
+
+  // Navigation plugin
+  eleventyConfig.addPlugin(eleventyNavigationPlugin);
+
+  // Image Plugin
+  eleventyConfig.addPlugin(eleventyImageTransformPlugin, {
+    // which file extensions to process
+    extensions: "html",
+
+    // Add any other Image utility options here:
+    formats: ["webp", "jpeg"],
+    widths: config.imageSizes,
+    filenameFormat: (id, src, width, format, options) => {
+      const extension = path.extname(src);
+      const name = path.basename(src, extension);
+      const dirname = path.dirname(src);
+      // Remove leading './' or '/' and 'src' if present
+      const cleanDirname = dirname
+        .replace(/^\.\/|^\//, '')
+        .replace(/^src\//, '');
+
+      // For images in the root
+      if (cleanDirname === '.' || cleanDirname === '') {
+        return `${name}-${width}w.${format}`;
+      }
+
+      // For images in subdirectories
+      return `${cleanDirname}/${name}-${width}w.${format}`;
+    },
+    sharpJpegOptions: {
+      mozjpeg: true
+    },
+    outputDir: "./_site",
+    urlPath: "/",
+
+    // optional, attributes assigned on <img> override these values.
+    defaultAttributes: {
+      loading: "lazy",
+      decoding: "async",
+      sizes: "100vw"
+    },
+  });
+
+
+  // FILTERS
+
+  // CSS Minifier using Lightningcss
+  eleventyConfig.addFilter("cssmin", function (code) {
+    let { code: minifiedCode } = transform({
+      code: Buffer.from(code),
+      minify: true,
+      sourceMap: false
     });
+    return minifiedCode.toString();
+  });
 
-    // Favicons plugin
-    // eleventyConfig.addPlugin(faviconsPlugin, {});
-
-    // Sitemap plugin
-    eleventyConfig.addPlugin(sitemap, {
-        sitemap: {
-            hostname: config.baseUrl,
-            changefreq: "weekly",
-            priority: 1.0,
-        },
-    });
-
-    // Navigation plugin
-    eleventyConfig.addPlugin(eleventyNavigationPlugin);
-
-    // IncludeByGlob Shortcode
-    eleventyConfig.addShortcode("include-glob", function (glob) {
-        const files = fg.sync(glob);
-        let text = '';
-        for (let file of files) {
-            try {
-                const data = fs.readFileSync(file, 'utf-8');
-                text += data;
-            } catch (err) {
-                console.log(err);
-            }
-        }
-        return text;
-    });
-
-    // JS Minifier
-    eleventyConfig.addAsyncFilter("jsmin", async function (code) {
-        try {
-            const minified = await minify(code);
-            return minified.code;
-        } catch (err) {
-            console.error("Terser error: ", err);
-            // Fail gracefully.
-            return code;
-        }
-    });
-
-    // Print File content directly into HTML. For SVG images and more.
-    eleventyConfig.addFilter('printFileContents', function (filePath) {
-        const relativeFilePath = filePath; //`.` + filePath;
-        const fileContents = fs.readFileSync(relativeFilePath, (err, data) => {
-            if (err) throw err;
-            return data;
-        });
-
-        return fileContents.toString('utf8');
-    });
-
-    /**
-     * Parses a file system path and returns either the file name or directory.
-     * @param {string} path
-     * @param {'name'|'dir'} key
-     */
-    const pathParse = (path, key) => path.parse(path)[key];
-
-    /**
-     * Joins an arbitrary number of paths using the OS separator.
-     * @param {string[]} paths
-     */
-    const pathJoin = (...paths) => path.join(...paths);
-
-    eleventyConfig.addFilter('pathParse', pathParse);
-    eleventyConfig.addFilter('pathJoin', pathJoin);
-
-    /**
-     * Prefixes the given URL with the site's base URL.
-     * @param {string} url
-     */
-    const toAbsoluteUrl = (url) => {
-        return new URL(url, config.baseUrl).href;
+  // JS Minifier
+  eleventyConfig.addAsyncFilter("jsmin", async function (code) {
+    try {
+      const minified = await minify(code);
+      return minified.code;
+    } catch (err) {
+      console.error("Terser error: ", err);
+      // Fail gracefully.
+      return code;
     }
+  });
 
-    eleventyConfig.addFilter('toAbsoluteUrl', toAbsoluteUrl);
-
-    eleventyConfig.addTransform("htmlmin", function (content) {
-        if (this.page.outputPath && this.page.outputPath.endsWith(".html")) {
-            let minified = htmlmin.minify(content, {
-                useShortDoctype: true,
-                removeComments: true,
-                collapseWhitespace: true,
-                preserveLineBreaks: true,
-                minifyJS: true
-            });
-            return minified;
-        }
-        return content;
-    });
-
-    // Watch for all files in src/asssets/  
-    eleventyConfig.addWatchTarget("src/assets/**/*.*");
-
-    // 11-ty Image Plugin Shortcode
-    eleventyConfig.addShortcode("respImage", async function (src, alt, sizes = "100vw", loading = "lazy") {
-        if (alt === undefined) {
-            // You bet we throw an error on missing alt (alt="" works okay)
-            throw new Error(`Missing \`alt\` on responsiveimage from: ${src}`);
-        }
-
-        const imageSrc = `src/${src}`;
-        const imageDir = `${path.dirname(src)}`;
-
-        let metadata = await Image(imageSrc, {
-            widths: [300, 600, 1100, 1500, 1800, 2000, 2400],
-            formats: ['webp', 'jpeg'],
-            outputDir: `./_site/img/${imageDir}`,
-            urlPath: `/img/${imageDir}`,
-            filenameFormat: function (id, src, width, format, options) {
-                const extension = path.extname(src);
-                const name = path.basename(src, extension);
-                return `${name}-${width}w.${format}`;
-            },
-            sharpJpegOptions: {
-                mozjpeg: true
-            }
-        });
-
-        // let imageAttributes = {
-        //     alt,
-        //     sizes,
-        //     loading: "lazy"
-        // };
-
-        // return Image.generateHTML(metadata, imageAttributes);
-
-        let lowsrc = metadata.jpeg[0];
-        let highsrc = metadata.jpeg[metadata.jpeg.length - 1];
-        let loadingAttr = loading === 'lazy' ? 'loading="lazy"' : 'fetchpriority="high"';
-
-        return `<picture>
-            ${Object.values(metadata).map(imageFormat => {
-            return `  <source type="${imageFormat[0].sourceType}" srcset="${imageFormat.map(entry => entry.srcset).join(", ")}" sizes="${sizes}">`;
-        }).join("\n")}
-                <img
-                    src="${lowsrc.url}"
-                    width="${highsrc.width}"
-                    height="${highsrc.height}"
-                    alt="${alt}"
-                    ${loadingAttr}
-                    decoding="async">
-            </picture>`;
-    });
-
-    // 11-ty Image Plugin Shortcode FROM URL
-    eleventyConfig.addShortcode("respImageURL", async function (src, alt, sizes = "100vw", loading = "lazy") {
-        if (alt === undefined) {
-            // You bet we throw an error on missing alt (alt="" works okay)
-            throw new Error(`Missing \`alt\` on responsiveimage from: ${src}`);
-        }
-
-        const imageSrc = `src/${src}`;
-        const imageDir = `${path.dirname(src)}`;
-
-        let metadata;
-
-        try {
-            metadata = await Image(src, {
-                widths: [300, 600, 1100, 1500, 1800, 2000, 2400],
-                formats: ['webp', 'jpeg'],
-                outputDir: `./_site/img/`,
-                sharpJpegOptions: {
-                    mozjpeg: true
-                }
-            });
-        } catch (e) {
-            // console.log(e);
-            return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000">
-            <circle fill="blue" stroke="none" cx="500" cy="500" r="375"/>
-        </svg>`;
-        }
-
-
-        let lowsrc = metadata.jpeg[0];
-        let highsrc = metadata.jpeg[metadata.jpeg.length - 1];
-        let loadingAttr = loading === 'lazy' ? 'loading="lazy"' : 'fetchpriority="high"';
-
-        return `<picture>
-            ${Object.values(metadata).map(imageFormat => {
-            return `  <source type="${imageFormat[0].sourceType}" srcset="${imageFormat.map(entry => entry.srcset).join(", ")}" sizes="${sizes}">`;
-        }).join("\n")}
-                <img
-                    src="${lowsrc.url}"
-                    width="${highsrc.width}"
-                    height="${highsrc.height}"
-                    alt="${alt}"
-                    ${loadingAttr}
-                    decoding="async">
-            </picture>`;
-    });
-
-    return {
-        dir: {
-            input: "src",
-            output: "_site"
-        }
+  // HTML Minifier
+  eleventyConfig.addTransform("htmlmin", function (content) {
+    if (this.page.outputPath && this.page.outputPath.endsWith(".html")) {
+      let minified = htmlmin.minify(content, {
+        useShortDoctype: true,
+        removeComments: true,
+        collapseWhitespace: true,
+        preserveLineBreaks: true,
+        minifyJS: true
+      });
+      return minified;
     }
+    return content;
+  });
+
+
 };

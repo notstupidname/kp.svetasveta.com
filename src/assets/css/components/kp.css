@@ -1,0 +1,40 @@
+body.kp {
+  --column-width: 65ch;
+
+  & .offer {
+    grid-column: 4/6;
+    display: flex;
+    /* align-content: space-between; */
+    flex-wrap: wrap;
+    gap: var(--space-l) var(--space-xs);
+
+    &>:first-child {
+      flex: 0 0 calc(var(--space-xl) - var(--space-xs));
+      font-size: var(--step-1);
+      line-height: 1.2;
+    }
+
+    & .offer-content {
+      flex: 1 1 44ch;
+
+      & h3 {
+        font-size: var(--step-1);
+      }
+    }
+
+    & .offer-price {
+      flex: 1 0 13ch;
+      text-align: end;
+
+      & .price {
+        font-size: var(--step-1);
+        line-height: 1.2;
+      }
+
+      & .duration {
+        font-weight: var(--font-weight-light);
+        color: var(--text-color2);
+      }
+    }
+  }
+}

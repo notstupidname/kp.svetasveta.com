@@ -1,4 +1,6 @@
-module.exports = {
-    enableDesignMode: process.env.ELEVENTY_ENV === 'dev',
-    devMode: process.env.ELEVENTY_ENV === 'dev',
-};
+const features = {
+  devMode: process.env.ELEVENTY_ENV === 'dev',
+  showDrafts: process.env.DRAFTS === 'show'
+}
+
+export default features;
