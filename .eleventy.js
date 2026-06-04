@@ -20,6 +20,7 @@ export default function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy("src/assets/fonts");
   eleventyConfig.addPassthroughCopy("src/assets/icons");
   eleventyConfig.addPassthroughCopy("src/assets/video");
+  eleventyConfig.addPassthroughCopy("src/assets/svg");
 
   // Watch for all files in src/asssets/
   eleventyConfig.addWatchTarget("src/assets/**/*.*");
